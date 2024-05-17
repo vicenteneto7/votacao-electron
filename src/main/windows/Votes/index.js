@@ -2,13 +2,16 @@ import { createWindow } from '../../factories'
 
 import { join } from 'path'
 
+import { displayName } from '../../../../package.json'
+
+
 
 export * from './ipcs'
 
 export function VotesWindow() {
   const window = createWindow({
     id: 'votes',
-    title: 'Votes',
+    title: `${displayName} - Votes`,
     width: 600,
     height: 400,
     show: false,

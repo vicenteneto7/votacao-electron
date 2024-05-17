@@ -1,6 +1,6 @@
 import { app } from 'electron'
 
-import './ipc'
+//import './ipc' - aqui se importa a api -
 
 import { makeAppSetup, makeAppWithSingleInstanceLock } from './factories'
 import { MainWindow, registerDocumentsWindowCreationByIPC } from './windows'

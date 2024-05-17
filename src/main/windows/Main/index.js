@@ -3,11 +3,13 @@ import { join } from 'path'
 import { createWindow } from '../../factories'
 import { ENVIRONMENT } from '../../../../shared/constants'
 
+import { displayName } from '../../../../package.json'
+
 
 export async function MainWindow() {
   const window = createWindow({
     id: 'main',
-    title: 'App Documents',
+    title: displayName,
     width: 1100,
     height: 800,
     show: false,

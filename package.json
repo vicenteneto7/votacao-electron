@@ -1,4 +1,5 @@
 {
+  "displayName": "My Awesome Electron App",
   "name": "electron-template",
   "version": "1.0.0",
   "description": "An Electron application with React",
