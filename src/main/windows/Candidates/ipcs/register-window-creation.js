@@ -1,17 +1,17 @@
 import { ipcMain } from 'electron'
 import { IPC } from '../../../../../shared/constants'
 import { registerWindowCreationByIPC } from '../../../factories'
-import { VotesWindow } from '..'
+import { CandidatesWindow } from '..'
 
 import '../../../ipc'
 
-export function registerVotesWindowCreationByIPC() {
+export function registerCandidatesWindowCreationByIPC() {
   registerWindowCreationByIPC({
-    channel: IPC.WINDOWS.VOTES.CREATE_WINDOW,
-    window: VotesWindow,
+    channel: IPC.WINDOWS.CANDIDATES.CREATE_WINDOW,
+    window: CandidatesWindow,
 
     callback(window, { sender }) {
-      const channel = IPC.WINDOWS.VOTES.WHEN_WINDOW_CLOSE
+      const channel = IPC.WINDOWS.CANDIDATES.WHEN_WINDOW_CLOSE
 
       ipcMain.removeHandler(channel)
 
