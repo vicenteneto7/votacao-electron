@@ -1,7 +1,7 @@
-import { Button } from '../../components/Button'
+import { Button } from '../../../components/Button'
 import { useEffect } from 'react'
-import { useWindowStore } from '../../store/votes'
-import { useWindowStore2 } from '../../store/candidates'
+import { useWindowStore } from '../../../store/votes'
+import { useWindowStore2 } from '../../../store/candidates'
 
 export function MainScreen() {
   const store = useWindowStore().about

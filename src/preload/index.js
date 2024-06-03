@@ -1,4 +1,4 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 
 import * as ipcs from './ipcs'
 
@@ -8,6 +8,13 @@ const api = {
   ...ipcs,
 
   username: process.env.USER,
+
+  registerEleitor(req) {
+    return ipcRenderer.invoke('registerEleitor', req)
+  },
+  loginEleitor(req) {
+    return ipcRenderer.invoke('loginEleitor', req)
+  }
 }
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise

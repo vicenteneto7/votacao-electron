@@ -25,11 +25,14 @@
     "better-sqlite3": "^10.0.0",
     "electron-extension-installer": "^1.2.0",
     "electron-router-dom": "^1.0.5",
+    "react-hook-form": "^7.51.5",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.2",
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
+    "@electron/rebuild": "^3.6.0",
     "@vitejs/plugin-react": "^4.2.1",
     "electron": "^28.2.0",
     "electron-builder": "^24.9.1",

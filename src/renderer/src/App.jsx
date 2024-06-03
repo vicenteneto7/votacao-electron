@@ -1,13 +1,15 @@
-import { Routes } from "./routes/routes"
+import { QueryClientProvider } from 'react-query'
+import { Routes } from './routes/routes'
+import { queryClient } from './lib/react-query'
 
 function App() {
-
   return (
     <>
-      <Routes />
+      <QueryClientProvider client={queryClient}>
+        <Routes />
+      </QueryClientProvider>
     </>
   )
 }
 
 export default App
-
