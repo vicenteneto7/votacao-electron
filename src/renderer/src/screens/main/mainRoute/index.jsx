@@ -2,6 +2,7 @@ import { Button } from '../../../components/Button'
 import { useEffect } from 'react'
 import { useWindowStore } from '../../../store/votes'
 import { useWindowStore2 } from '../../../store/candidates'
+import { LogoutButton } from '../../../components/Logout'
 
 export function MainScreen() {
   const store = useWindowStore().about
@@ -44,6 +45,7 @@ export function MainScreen() {
       <Button className={store.isOpen ? 'disabled' : ''} onClick={openCandidatesWindow}>
         Abra a janela dos candidatos
       </Button>
+      <LogoutButton />
     </main>
   )
 }

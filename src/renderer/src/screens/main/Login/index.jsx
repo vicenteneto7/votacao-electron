@@ -2,6 +2,7 @@
 import { useForm } from 'react-hook-form'
 import { useMutation } from 'react-query'
 import { Link, useNavigate } from 'react-router-dom'
+import { useEleitor } from '../../../hooks/EleitorContext'
 
 const loginEleitor = async (data) => {
   const response = await window.api.loginEleitor(data)
@@ -14,6 +15,8 @@ const loginEleitor = async (data) => {
 export const Login = () => {
   const navigate = useNavigate()
 
+  const { putEleitorData } = useEleitor()
+
   const {
     register,
     handleSubmit,
@@ -21,14 +24,17 @@ export const Login = () => {
   } = useForm()
 
   const mutation = useMutation(loginEleitor, {
-    onSuccess: (data) => {
-      console.log('Login bem-sucedido:', data)
+    onSuccess: async (dataEleitor) => {
+      console.log('Login bem-sucedido:', dataEleitor)
       // Lógica adicional após login bem-sucedido
+      await localStorage.setItem('u', JSON.stringify(dataEleitor))
+
+
       setTimeout(() => {
         navigate('/main')
       }, 1000)
 
-      return data
+      return dataEleitor
     },
     onError: (error) => {
       console.error('Erro no login:', error)

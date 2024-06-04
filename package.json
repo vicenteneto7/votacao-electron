@@ -25,6 +25,7 @@
     "better-sqlite3": "^10.0.0",
     "electron-extension-installer": "^1.2.0",
     "electron-router-dom": "^1.0.5",
+    "prop-types": "^15.8.1",
     "react-hook-form": "^7.51.5",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.23.1"
