@@ -1,4 +1,4 @@
-import { ipcMain, session } from "electron";
+import { ipcMain } from "electron";
 import db from "../renderer/src/models/DBManager";
 import bcrypt from 'bcrypt'
 
@@ -37,7 +37,7 @@ ipcMain.handle('loginEleitor', async (_, credentials) => {
 
     const isPasswordValid = await bcrypt.compare(senha, eleitor.senha);
     if (isPasswordValid) {
-      return { success: true, message: 'Login bem-sucedido!', admin: Boolean(eleitor.admin), userId: eleitor.id_eleitor, nome: eleitor.nome };
+      return { success: true, message: 'Login bem-sucedido!', admin: Boolean(eleitor.admin), eleitorId: eleitor.id_eleitor, nome: eleitor.nome };
     } else {
       return { success: false, message: 'Senha incorreta.' };
     }
@@ -47,6 +47,10 @@ ipcMain.handle('loginEleitor', async (_, credentials) => {
 });
 
 ipcMain.handle('vote', async (event, { id_eleitor, id_candidato }) => {
+  if (!id_eleitor || !id_candidato) {
+    return { success: false, message: 'IDs de eleitor ou candidato são nuloskk.' };
+  }
+
   const checkQuery = `SELECT * FROM Voto WHERE id_eleitor = :id_eleitor`;
   const checkStmt = db.prepare(checkQuery);
 
@@ -64,10 +68,26 @@ ipcMain.handle('vote', async (event, { id_eleitor, id_candidato }) => {
   const insertStmt = db.prepare(insertQuery);
 
   try {
-    const result = insertStmt.run({ id_eleitor, id_candidato });
+    insertStmt.run({ id_eleitor, id_candidato });
     return { success: true, message: 'Voto registrado com sucesso!' };
   } catch (error) {
     return { success: false, message: 'Erro ao registrar voto: ' + error.message };
+  }
+});
+
+ipcMain.handle('getCandidatos', async () => {
+  const query = `SELECT * FROM Candidato`;
+  const stmt = db.prepare(query);
+
+  try {
+    const candidatos = stmt.all();
+    if (candidatos.length > 0) {
+      return { success: true, candidatos: candidatos };
+    } else {
+      return { success: false, message: 'Nenhum candidato encontrado.' };
+    }
+  } catch (error) {
+    return { success: false, message: 'Erro ao buscar candidatos: ' + error.message };
   }
 });
 

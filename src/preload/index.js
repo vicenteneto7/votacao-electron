@@ -14,6 +14,12 @@ const api = {
   },
   loginEleitor(req) {
     return ipcRenderer.invoke('loginEleitor', req)
+  },
+  vote(req){
+    return ipcRenderer.invoke('vote', req)
+  },
+  getCandidatos() {
+    return ipcRenderer.invoke('getCandidatos')
   }
 }
 // Use `contextBridge` APIs to expose Electron APIs to

@@ -2,7 +2,7 @@ import { Router, Route } from 'electron-router-dom'
 
 import { MainScreen } from '../screens/main/mainRoute'
 import { VotesScreen } from '../screens/votes'
-import { CandidatesScreen } from '../screens/candidates'
+import { CandidateList } from '../screens/candidates'
 import { Login } from '../screens/main/Login'
 import { Register } from '../screens/main/Register'
 import PrivateRoute from './private-routes'
@@ -18,7 +18,7 @@ export function MyRoutes() {
         </>
       }
       votes={<Route path="/" element={<VotesScreen />} />}
-      candidates={<Route path="/" element={<CandidatesScreen />} />}
+      candidates={<Route path="/" element={<CandidateList />} />}
     />
   )
 }

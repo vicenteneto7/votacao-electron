@@ -26,9 +26,9 @@ export const Login = () => {
   const mutation = useMutation(loginEleitor, {
     onSuccess: async (dataEleitor) => {
       console.log('Login bem-sucedido:', dataEleitor)
+      
       // Lógica adicional após login bem-sucedido
       putEleitorData(dataEleitor)
-
 
       setTimeout(() => {
         navigate('/main')
