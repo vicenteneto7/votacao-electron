@@ -91,7 +91,7 @@ ipcMain.handle('getCandidatos', async () => {
   }
 });
 
-ipcMain.handle('getVoterVotes', async (event, { id_eleitor }) => {
+ipcMain.handle('getVoterVotes', async (_, { id_eleitor }) => {
   const query = `
     SELECT Candidato.nome, Candidato.partido
     FROM Voto

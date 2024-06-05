@@ -20,6 +20,9 @@ const api = {
   },
   getCandidatos() {
     return ipcRenderer.invoke('getCandidatos')
+  },
+  getAllVoterVotes() {
+    return ipcRenderer.invoke('getAllVoterVotes')
   }
 }
 // Use `contextBridge` APIs to expose Electron APIs to
