@@ -37,7 +37,7 @@ ipcMain.handle('loginEleitor', async (_, credentials) => {
 
     const isPasswordValid = await bcrypt.compare(senha, eleitor.senha);
     if (isPasswordValid) {
-      return { success: true, message: 'Login bem-sucedido!', userId: eleitor.id_eleitor, nome: eleitor.nome };
+      return { success: true, message: 'Login bem-sucedido!', admin: Boolean(eleitor.admin), userId: eleitor.id_eleitor, nome: eleitor.nome };
     } else {
       return { success: false, message: 'Senha incorreta.' };
     }

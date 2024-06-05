@@ -1,5 +1,5 @@
 import { QueryClientProvider } from 'react-query'
-import { Routes } from './routes/routes'
+import { MyRoutes } from './routes/routes'
 import { queryClient } from './lib/react-query'
 import { EleitorProvider } from './hooks/EleitorContext'
 
@@ -8,7 +8,7 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <EleitorProvider>
-          <Routes />
+          <MyRoutes />
         </EleitorProvider>
       </QueryClientProvider>
     </>

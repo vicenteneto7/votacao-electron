@@ -20,7 +20,6 @@ export function MainScreen() {
     navigate('/login')
   }
 
-
   useEffect(() => {
     window.api.whenVotesWindowClose(({ message }) => {
       console.log(message)
@@ -59,7 +58,7 @@ export function MainScreen() {
       <Button className={store.isOpen ? 'disabled' : ''} onClick={openCandidatesWindow}>
         Abra a janela dos candidatos
       </Button>
-    
+      <button onClick={LogoutEleitor}>Logout</button>
     </main>
   )
 }
