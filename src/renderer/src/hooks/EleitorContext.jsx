@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-
 import PropTypes from 'prop-types'
 
 const EleitorContext = createContext({})
@@ -9,7 +8,6 @@ export const EleitorProvider = ({ children }) => {
 
   const putEleitorData = async (userInfo) => {
     setEleitorData(userInfo)
-
     await localStorage.setItem('u', JSON.stringify(userInfo))
   }
 
@@ -20,7 +18,6 @@ export const EleitorProvider = ({ children }) => {
   useEffect(() => {
     const loadEleitorData = async () => {
       const clientInfo = await localStorage.getItem('u')
-
       if (clientInfo) {
         setEleitorData(JSON.parse(clientInfo))
       }
@@ -39,7 +36,7 @@ export const useEleitor = () => {
   const context = useContext(EleitorContext)
 
   if (!context) {
-    throw new Error('useUser must be used with UserContext')
+    throw new Error('useEleitor deve ser usado com EleitorContext')
   }
 
   return context

@@ -27,7 +27,7 @@ export const Login = () => {
     onSuccess: async (dataEleitor) => {
       console.log('Login bem-sucedido:', dataEleitor)
       // Lógica adicional após login bem-sucedido
-      await localStorage.setItem('u', JSON.stringify(dataEleitor))
+      putEleitorData(dataEleitor)
 
 
       setTimeout(() => {
