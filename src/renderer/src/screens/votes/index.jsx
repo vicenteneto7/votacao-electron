@@ -3,7 +3,10 @@ import { useQuery } from 'react-query'
 export function VotesList() {
   const { data, isLoading, isError } = useQuery(
     'allVoterVotes',
-    async () => await window.api.getAllVoterVotes()
+    async () => await window.api.getAllVoterVotes(),
+    {
+      refetchInterval: 1000
+    }
   )
 
   if (isLoading) return <div>Carregando...</div>

@@ -22,7 +22,13 @@ const voteCandidato = async ({ id_eleitor, id_candidato }) => {
 export const CandidateList = () => {
   const { eleitorData } = useEleitor()
 
-  const { data: candidatos, error, isLoading } = useQuery('candidatos', fetchCandidatos)
+  const {
+    data: candidatos,
+    error,
+    isLoading
+  } = useQuery('candidatos', fetchCandidatos, {
+    refetchInterval: 1000
+  })
 
   console.log(candidatos)
 
@@ -35,7 +41,7 @@ export const CandidateList = () => {
 
   const handleVote = (id_candidato) => {
     if (eleitorData.eleitorId && id_candidato) {
-      mutation.mutate({ id_eleitor: eleitorData.eleitorId, id_candidato})
+      mutation.mutate({ id_eleitor: eleitorData.eleitorId, id_candidato })
     } else {
       console.error('IDs de eleitor ou candidato são nulos9.')
     }

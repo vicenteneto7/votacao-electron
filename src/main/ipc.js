@@ -133,5 +133,27 @@ ipcMain.handle('getAllVoterVotes', async () => {
   }
 });
 
+ipcMain.handle('countVotesPerCandidate', async () => {
+  const query = `
+    SELECT Candidato.id_candidato, Candidato.nome AS candidato_nome, Candidato.partido,
+           COUNT(*) AS total_votos
+    FROM Voto
+    JOIN Candidato ON Voto.id_candidato = Candidato.id_candidato
+    GROUP BY Candidato.id_candidato
+  `;
+  const stmt = db.prepare(query);
+
+  try {
+    const results = stmt.all();
+    if (results.length > 0) {
+      return { success: true, results: results };
+    } else {
+      return { success: false, message: 'Nenhum voto encontrado.' };
+    }
+  } catch (error) {
+    return { success: false, message: 'Erro ao contar votos: ' + error.message };
+  }
+});
+
 
 

@@ -6,6 +6,7 @@ import { Login } from '../screens/main/Login'
 import { Register } from '../screens/main/Register'
 import PrivateRoute from './private-routes'
 import { VotesList } from '../screens/votes'
+import { CountVotes } from '../screens/main/votos'
 
 export function MyRoutes() {
   return (
@@ -15,10 +16,11 @@ export function MyRoutes() {
           <Route path="/" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/main" element={<PrivateRoute component={MainScreen} />} />
+          <Route path="/votos" element={<PrivateRoute component={CountVotes} />} />
         </>
       }
-      votes={<Route path="/" element={<VotesList />} />}
-      candidates={<Route path="/" element={<CandidateList />} />}
+      votes={<Route path="/" element={<PrivateRoute component={VotesList} />} />}
+      candidates={<Route path="/" element={<PrivateRoute component={CandidateList} />} />}
     />
   )
 }

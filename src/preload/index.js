@@ -23,6 +23,9 @@ const api = {
   },
   getAllVoterVotes() {
     return ipcRenderer.invoke('getAllVoterVotes')
+  },
+  countVotesPerCandidate() {
+    return ipcRenderer.invoke('countVotesPerCandidate')
   }
 }
 // Use `contextBridge` APIs to expose Electron APIs to

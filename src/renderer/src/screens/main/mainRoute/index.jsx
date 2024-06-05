@@ -6,8 +6,6 @@ import { useEleitor } from '../../../hooks/EleitorContext'
 import { useNavigate } from 'react-router-dom'
 
 export function MainScreen() {
-  const navigate = useNavigate()
-
   const store = useWindowStore().about
   const store2 = useWindowStore2().about
 
@@ -64,9 +62,7 @@ export function MainScreen() {
       <Button className={store.isOpen ? 'disabled' : ''} onClick={openCandidatesWindow}>
         Ir para a votação
       </Button>
-      <button >
-        Ir para a apuração de votos
-      </button>
+      <button onClick={handleClick}>Ir para a apuração de votos</button>
       <button onClick={LogoutEleitor}>Logout</button>
     </main>
   )
