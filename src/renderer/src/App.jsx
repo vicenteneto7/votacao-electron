@@ -4,7 +4,7 @@ import { queryClient } from './lib/react-query'
 import { EleitorProvider } from './hooks/EleitorContext'
 import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from './styles/themes/default'
-import { GlobalStyle } from './styles/globalStyles'
+import { GlobalStyles } from './styles/globalStyles'
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
           <EleitorProvider>
             <MyRoutes />
           </EleitorProvider>
-          <GlobalStyle />
+          <GlobalStyles />
         </ThemeProvider>
       </QueryClientProvider>
     </>
