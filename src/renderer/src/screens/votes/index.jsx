@@ -1,6 +1,9 @@
 import { useQuery } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 
 export function VotesList() {
+  const navigate = useNavigate()
+
   const { data, isLoading, isError } = useQuery(
     'allVoterVotes',
     async () => await window.api.getAllVoterVotes(),
@@ -12,8 +15,13 @@ export function VotesList() {
   if (isLoading) return <div>Carregando...</div>
   if (isError) return <div>Erro ao carregar os votos</div>
 
+  function handleClick() {
+    navigate('/main')
+  }
+
   return (
     <div>
+      <button onClick={handleClick}>Voltar</button>
       <h2>Votos de Todos os Eleitores</h2>
       {data.success ? (
         <table>

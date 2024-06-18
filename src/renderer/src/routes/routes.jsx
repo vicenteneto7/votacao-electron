@@ -16,11 +16,11 @@ export function MyRoutes() {
           <Route path="/" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/main" element={<PrivateRoute component={MainScreen} />} />
-          <Route path="/votos" element={<PrivateRoute component={CountVotes} />} />
+          <Route path="/votos" element={<PrivateRoute component={VotesList} />} />
+          <Route path="/votacao" element={<PrivateRoute component={CandidateList} />} />
         </>
       }
-      votes={<Route path="/" element={<PrivateRoute component={VotesList} />} />}
-      candidates={<Route path="/" element={<PrivateRoute component={CandidateList} />} />}
+      votes={<Route path="/" element={<PrivateRoute component={CountVotes} />} />}
     />
   )
 }

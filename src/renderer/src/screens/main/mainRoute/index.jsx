@@ -1,13 +1,13 @@
 import { Button } from '../../../components/Button'
 import { useEffect } from 'react'
 import { useWindowStore } from '../../../store/votes'
-import { useWindowStore2 } from '../../../store/candidates'
 import { useEleitor } from '../../../hooks/EleitorContext'
 import { useNavigate } from 'react-router-dom'
+import { MainRouteContainer } from './styles'
+import { ButtonAction } from '../../../components/ButtonAction'
 
 export function MainScreen() {
   const store = useWindowStore().about
-  const store2 = useWindowStore2().about
 
   const { eleitorData } = useEleitor()
 
@@ -26,12 +26,6 @@ export function MainScreen() {
 
       store.setVotesWindowState(false)
     })
-
-    window.api.whenCandidatesWindowClose(({ message }) => {
-      console.log(message)
-
-      store2.setCandidatesWindowState(false)
-    })
   })
 
   function openVotesWindow() {
@@ -40,30 +34,26 @@ export function MainScreen() {
     store.setVotesWindowState(true)
   }
 
-  function openCandidatesWindow() {
-    window.api.createCandidatesWindow()
-
-    store2.setCandidatesWindowState(true)
-  }
+  
 
   console.log(window.api)
 
-  function handleClick() {
+  function handleClickVotation() {
+    navigate('/votacao')
+  }
+  function handleClickListVotes() {
     navigate('/votos')
   }
 
   return (
-    <main className="">
+    <MainRouteContainer className="">
       <h1>Olá, {eleitorData.nome}</h1>
-      Selecione ou crie um documento
-      <Button className={store.isOpen ? 'disabled' : ''} onClick={openVotesWindow}>
-        Abra a lista de votos
+      <Button style={{ backgroundColor: '#00B37E', color: 'white', width: '27.4rem', height: '2.7rem'}} className={store.isOpen ? 'disabled' : ''} onClick={openVotesWindow}>
+        Ir para a apuração
       </Button>
-      <Button className={store.isOpen ? 'disabled' : ''} onClick={openCandidatesWindow}>
-        Ir para a votação
-      </Button>
-      <button onClick={handleClick}>Ir para a apuração de votos</button>
-      <button onClick={LogoutEleitor}>Logout</button>
-    </main>
+      <ButtonAction onClick={handleClickVotation}>Ir para a votação</ButtonAction>
+      <ButtonAction onClick={handleClickListVotes}>Ir para a lista de votos</ButtonAction>
+      <ButtonAction style={{ backgroundColor: 'red'}} onClick={LogoutEleitor}>Logout</ButtonAction>
+    </MainRouteContainer>
   )
 }

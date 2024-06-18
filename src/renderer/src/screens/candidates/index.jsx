@@ -2,6 +2,8 @@
 import { useQuery, useMutation } from 'react-query'
 import { useEleitor } from '../../hooks/EleitorContext'
 import { queryClient } from '../../lib/react-query'
+import { useNavigate } from 'react-router-dom'
+
 
 const fetchCandidatos = async () => {
   const response = await window.api.getCandidatos()
@@ -20,6 +22,8 @@ const voteCandidato = async ({ id_eleitor, id_candidato }) => {
 }
 
 export const CandidateList = () => {
+  const navigate = useNavigate()
+
   const { eleitorData } = useEleitor()
 
   const {
@@ -50,8 +54,14 @@ export const CandidateList = () => {
   if (isLoading) return <div>Carregando candidatos...</div>
   if (error) return <div>Erro ao carregar candidatos: {error.message}</div>
 
+  function handleClick() {
+    navigate('/main')
+  }
+
   return (
     <div>
+      <button onClick={handleClick}>Voltar</button>
+
       <h2>Lista de Candidatos</h2>
       <ul>
         {candidatos.map((candidato) => (
