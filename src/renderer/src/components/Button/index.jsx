@@ -1,10 +1,11 @@
+import { ContainerButton } from './styles'
 
 export function Button({ children, className, ...restOfProps }) {
   const combinedClassNames = [className].join(' ')
 
   return (
-    <button className={combinedClassNames} {...restOfProps}>
+    <ContainerButton className={combinedClassNames} {...restOfProps}>
       {children}
-    </button>
+    </ContainerButton>
   )
 }

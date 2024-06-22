@@ -48,7 +48,7 @@ export function MainScreen() {
   return (
     <MainRouteContainer className="">
       <h1>Olá, {eleitorData.nome}</h1>
-      <Button style={{ backgroundColor: '#00B37E', color: 'white', width: '27.4rem', height: '2.7rem'}} className={store.isOpen ? 'disabled' : ''} onClick={openVotesWindow}>
+      <Button className={store.isOpen ? 'disabled' : ''} onClick={openVotesWindow}>
         Ir para a apuração
       </Button>
       <ButtonAction onClick={handleClickVotation}>Ir para a votação</ButtonAction>

@@ -58,9 +58,15 @@ export const CandidateList = () => {
     navigate('/main')
   }
 
+  function handleClickCarrossel() {
+    navigate('/carrossel')
+  }
+
   return (
     <div>
       <button onClick={handleClick}>Voltar</button>
+      <button onClick={handleClickCarrossel}>Voltar</button>
+
 
       <h2>Lista de Candidatos</h2>
       <ul>

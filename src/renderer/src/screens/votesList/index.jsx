@@ -18,7 +18,7 @@ export function VotesList() {
   function handleClick() {
     navigate('/main')
   }
-
+  
   return (
     <div>
       <button onClick={handleClick}>Voltar</button>

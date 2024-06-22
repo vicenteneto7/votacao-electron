@@ -1,12 +1,13 @@
 import { Router, Route } from 'electron-router-dom'
 
 import { MainScreen } from '../screens/main/mainRoute'
-import { CandidateList } from '../screens/candidates'
 import { Login } from '../screens/main/Login'
 import { Register } from '../screens/main/Register'
 import PrivateRoute from './private-routes'
-import { VotesList } from '../screens/votes'
+import { VotesList } from '../screens/votesList'
 import { CountVotes } from '../screens/main/votos'
+import { VotesCarousel } from '../screens/main/votesCarrossel'
+import { CandidateList } from '../screens/candidatesList'
 
 export function MyRoutes() {
   return (
@@ -20,7 +21,12 @@ export function MyRoutes() {
           <Route path="/votacao" element={<PrivateRoute component={CandidateList} />} />
         </>
       }
-      votes={<Route path="/" element={<PrivateRoute component={CountVotes} />} />}
+      votes={
+        <>
+         <Route path="/" element={<PrivateRoute component={CountVotes} />} />
+         <Route path="/votosCarrossel" element={<PrivateRoute component={VotesCarousel} />} />
+      </>
+      }
     />
   )
 }

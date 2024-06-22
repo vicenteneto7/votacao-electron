@@ -1,6 +1,9 @@
 import { useQuery } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 
 export function CountVotes() {
+  const navigate = useNavigate()
+
 
   const { data, isLoading, isError } = useQuery(
     'countVotesPerCandidate',
@@ -13,8 +16,14 @@ export function CountVotes() {
   if (isLoading) return <div>Carregando...</div>
   if (isError) return <div>Erro ao carregar a contagem de votos</div>
 
+  function handleClickCarouselForm() {
+    navigate('/votosCarrossel')
+  }
+
   return (
     <div>
+      <button onClick={handleClickCarouselForm}>Formato Carrossel</button>
+
       <h2>Contagem de Votos por Candidato</h2>
       {data.success ? (
         <table>
