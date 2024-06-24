@@ -1,6 +1,32 @@
 import { ipcMain } from "electron";
 import db from "../renderer/src/models/DBManager";
 import bcrypt from 'bcrypt'
+import multer from "multer";
+
+// Configuração do armazenamento com multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+
+// Inicializa o multer com a configuração de armazenamento
+const upload = multer({ storage });
+
+ipcMain.handle('uploadImage', (event, file) => {
+  return new Promise((resolve, reject) => {
+    upload.single('file')(file, {}, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve({ path: `uploads/${file.filename}` });
+      }
+    });
+  });
+});
 
 ipcMain.handle('registerEleitor', async (_, eleitorData) => {
   const { nome, email, senha } = eleitorData;
