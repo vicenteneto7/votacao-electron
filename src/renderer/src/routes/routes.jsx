@@ -8,6 +8,7 @@ import { VotesList } from '../screens/votesList'
 import { CountVotes } from '../screens/main/votos'
 import { VotesCarousel } from '../screens/main/votesCarrossel'
 import { CandidateList } from '../screens/candidatesList'
+import { Admin } from '../screens/Admin'
 
 export function MyRoutes() {
   return (
@@ -19,6 +20,9 @@ export function MyRoutes() {
           <Route path="/main" element={<PrivateRoute component={MainScreen} />} />
           <Route path="/votos" element={<PrivateRoute component={VotesList} />} />
           <Route path="/votacao" element={<PrivateRoute component={CandidateList} />} />
+
+          <Route path="/admin" element={<PrivateRoute component={Admin} isAdmin />} />
+
         </>
       }
       votes={

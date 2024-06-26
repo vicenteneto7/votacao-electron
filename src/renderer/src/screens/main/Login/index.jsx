@@ -33,7 +33,11 @@ export const Login = () => {
       putEleitorData(dataEleitor)
 
       setTimeout(() => {
-        navigate('/main')
+        if (dataEleitor.admin) {
+          navigate('/admin')
+        } else {
+          navigate('/main')
+        }
       }, 1000)
 
       return dataEleitor
@@ -53,12 +57,19 @@ export const Login = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <InputLabel>E-mail</InputLabel>
-          <InputForm placeholder='Digite seu e-mail' {...register('email', { required: 'Email é obrigatório' })} />
+          <InputForm
+            placeholder="Digite seu e-mail"
+            {...register('email', { required: 'Email é obrigatório' })}
+          />
           {errors.email && <p>{errors.email.message}</p>}
         </div>
         <div>
           <InputLabel>Senha</InputLabel>
-          <InputForm placeholder='Digite sua senha' type="password" {...register('senha', { required: 'Senha é obrigatória' })} />
+          <InputForm
+            placeholder="Digite sua senha"
+            type="password"
+            {...register('senha', { required: 'Senha é obrigatória' })}
+          />
           {errors.senha && <p>{errors.senha.message}</p>}
         </div>
         <ButtonAction type="submit" disabled={mutation.isLoading}>
@@ -67,10 +78,11 @@ export const Login = () => {
         {mutation.isError && <p>{mutation.error.message}</p>}
 
         <ContainerLink>
-        <p>Não possui conta?</p><a><Link to="/">Clique aqui</Link></a>
+          <p>Não possui conta?</p>
+          <a>
+            <Link to="/">Clique aqui</Link>
+          </a>
         </ContainerLink>
-        
-        
       </form>
     </LoginContainer>
   )
