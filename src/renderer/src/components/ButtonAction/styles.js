@@ -3,9 +3,9 @@ import styled from 'styled-components'
 export const ContainerButton = styled.button`
   height: 2.7rem;
   width: 27.4rem;
-  background: ${(props) => props.theme['green-300']};
+  background: ${(props) => props.theme['purple']};
   color: white;
-  border-radius: 0.2rem;
+  border-radius: 0.3rem;
   outline: none;
   text-decoration: none;
   border: none;
