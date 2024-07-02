@@ -12,8 +12,8 @@ export function VotesWindow() {
   const window = createWindow({
     id: 'votes',
     title: `${displayName} - Votes`,
-    width: 600,
-    height: 400,
+    width: 700,
+    height: 500,
     show: false,
     resizable: true,
     alwaysOnTop: true,
