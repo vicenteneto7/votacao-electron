@@ -89,18 +89,18 @@ export const CandidateList = () => {
 
   return (
     <Container>
-      <Container2>
-        <ButtonContainer>
-          <div style={{ position: 'fixed', left: '9rem'}}>
-            <Button onClick={handleClick}>
-              <MdArrowBack />
-              Voltar
-            </Button>
-          </div>
-          <div style={{ width: '100%' ,display: 'flex', justifyContent: 'center'}}>
+      <ButtonContainer>
+        <div style={{ position: 'fixed', left: '9rem' }}>
+          <Button onClick={handleClick}>
+            <MdArrowBack />
+            Voltar
+          </Button>
+        </div>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
           <h2>Lista de Candidatos</h2>
-          </div>
-        </ButtonContainer>
+        </div>
+      </ButtonContainer>
+      <Container2>
         <Carousel itemsToShow={4} style={{ width: '90%' }} breakPoints={breakPoints}>
           {candidatos.map((candidato) => (
             <ContainerItems key={candidato.id_candidato}>
