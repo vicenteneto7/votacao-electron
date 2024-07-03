@@ -12,7 +12,7 @@ export function CountVotes() {
 
   return (
     <Container>
-      <h2>Contagem de Votos por Candidato</h2>
+      <h2>Apuração da votação</h2>
 
       <CandidatesCarousel />
     </Container>

@@ -1,7 +1,18 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Container = styled.div`
+  height: 100%;
+  width: 100%;
+
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 3.5rem 0;
+  `
+
+export const Container2 = styled.div`
   width: 90%;
   height: 100%;
 
@@ -31,7 +42,16 @@ export const Container = styled.div`
     background-color: #bebebf;
     color: #efefef;
   }
+
 `
+
+export const ButtonContainer = styled.div`
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+`
+
 
 export const CategoryImage = styled.img``
 
@@ -104,6 +124,7 @@ export const Button = styled.div`
   height: 2.3rem;
   width: 10rem;
   margin-top: 0.4rem;
+  gap: 0.5rem;
 
   color: #fff;
   text-align: center;

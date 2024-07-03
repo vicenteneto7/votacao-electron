@@ -26,7 +26,7 @@ export function CandidatesCarousel() {
   if (isError) return <div>Erro ao carregar a contagem de votos</div>
 
   const breakPoints = [
-    { width: 1, itemsToShow: 2 },
+    { width: 1, itemsToShow: 1 },
     { width: 400, itemsToShow: 2, itemsToScroll: 2 },
     { width: 600, itemsToShow: 3 },
     { width: 900, itemsToShow: 4 },
