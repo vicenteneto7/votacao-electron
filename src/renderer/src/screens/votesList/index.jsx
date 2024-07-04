@@ -1,5 +1,29 @@
 import { useQuery } from 'react-query'
 import { useNavigate } from 'react-router-dom'
+import { FixedSizeList as List } from 'react-window'
+
+import {
+  Button,
+  ButtonContainer,
+  CardCandidate,
+  CardEleitor,
+  CardInner,
+  CardVote,
+  CardVoted,
+  Container,
+  Container2,
+  ContainerItems,
+  CustomList,
+  Image,
+  Name,
+  Party,
+  Title,
+  Voted
+} from './styles'
+import { MdArrowBack } from 'react-icons/md'
+import { LiaLongArrowAltRightSolid } from 'react-icons/lia'
+
+import User from '../../assets/user.svg'
 
 export function VotesList() {
   const navigate = useNavigate()
@@ -18,35 +42,60 @@ export function VotesList() {
   function handleClick() {
     navigate('/main')
   }
-  
+
+  const Row = ({ index, style, data }) => {
+    const vote = data[index]
+    return (
+      <ContainerItems style={style} key={index}>
+        <CardInner>
+          <CardVote>
+            <CardEleitor>
+              <Image src={User} />
+              <Name>{vote.eleitor_nome}</Name>
+              <div>{vote.email}</div>
+            </CardEleitor>
+            <CardVoted>
+              <Voted>Votou em</Voted>
+              <LiaLongArrowAltRightSolid size={60} color='' />
+            </CardVoted>
+            <CardCandidate>
+              <Image src={User} />
+              <Name>{vote.candidato_nome}</Name>
+              <Party>{vote.partido}</Party>
+            </CardCandidate>
+          </CardVote>
+        </CardInner>
+      </ContainerItems>
+    )
+  }
+
   return (
-    <div>
-      <button onClick={handleClick}>Voltar</button>
-      <h2>Votos de Todos os Eleitores</h2>
-      {data.success ? (
-        <table>
-          <thead>
-            <tr>
-              <th>Eleitor</th>
-              <th>Email</th>
-              <th>Candidato</th>
-              <th>Partido</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.votes.map((vote, index) => (
-              <tr key={index}>
-                <td>{vote.eleitor_nome}</td>
-                <td>{vote.email}</td>
-                <td>{vote.candidato_nome}</td>
-                <td>{vote.partido}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <div>{data.message}</div>
-      )}
-    </div>
+    <Container>
+      <ButtonContainer>
+        <div style={{ position: 'fixed', left: '9rem' }}>
+          <Button onClick={handleClick}>
+            <MdArrowBack />
+            Voltar
+          </Button>
+        </div>
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <Title>Lista de votos realizados</Title>
+        </div>
+      </ButtonContainer>
+      <Container2>
+        {data && (
+          <CustomList
+            height={600}
+            itemCount={data.votes.length}
+            itemSize={230}
+            width={'100%'}
+            itemData={data.votes}
+            style={{ overflowY: 'scroll', overflowX: 'hidden' }} // Ocultar barras de rolagem
+          >
+            {Row}
+          </CustomList>
+        )}
+      </Container2>
+    </Container>
   )
 }

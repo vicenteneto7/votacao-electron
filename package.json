@@ -40,6 +40,7 @@
     "react-slick": "^0.30.2",
     "react-swipeable-views": "^0.14.0",
     "react-swipeable-views-utils": "^0.14.0",
+    "react-window": "^1.8.10",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.11"
   },

@@ -6,7 +6,6 @@ import { Register } from '../screens/main/Register'
 import PrivateRoute from './private-routes'
 import { VotesList } from '../screens/votesList'
 import { CountVotes } from '../screens/main/votos'
-import { VotesCarousel } from '../screens/main/votesCarrossel'
 import { CandidateList } from '../screens/candidatesList'
 import { AdminMainScreen } from '../screens/Admin'
 
@@ -28,7 +27,6 @@ export function MyRoutes() {
       votes={
         <>
          <Route path="/" element={<PrivateRoute component={CountVotes} />} />
-         <Route path="/votosCarrossel" element={<PrivateRoute component={VotesCarousel} />} />
       </>
       }
     />
