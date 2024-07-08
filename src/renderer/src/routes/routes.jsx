@@ -7,7 +7,8 @@ import PrivateRoute from './private-routes'
 import { VotesList } from '../screens/votesList'
 import { CountVotes } from '../screens/main/votos'
 import { CandidateList } from '../screens/candidatesList'
-import { AdminMainScreen } from '../screens/Admin'
+import { paths } from '../constants/paths'
+import { Admin } from '../screens/Admin'
 
 export function MyRoutes() {
   return (
@@ -20,14 +21,13 @@ export function MyRoutes() {
           <Route path="/votos" element={<PrivateRoute component={VotesList} />} />
           <Route path="/votacao" element={<PrivateRoute component={CandidateList} />} />
 
-          <Route path="/admin" element={<PrivateRoute component={AdminMainScreen} isAdmin />} />
-
+          <Route path={paths.Candidates} element={<PrivateRoute component={Admin} isAdmin />} />
         </>
       }
       votes={
         <>
-         <Route path="/" element={<PrivateRoute component={CountVotes} />} />
-      </>
+          <Route path="/" element={<PrivateRoute component={CountVotes} />} />
+        </>
       }
     />
   )

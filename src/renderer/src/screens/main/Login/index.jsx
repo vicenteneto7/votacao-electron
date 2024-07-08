@@ -34,7 +34,7 @@ export const Login = () => {
 
       setTimeout(() => {
         if (dataEleitor.admin) {
-          navigate('/admin')
+          navigate('/listar-candidatos')
         } else {
           navigate('/main')
         }

@@ -1,13 +1,14 @@
 import styled from 'styled-components'
 
-export const AdminRouteContainer = styled.main`
-    height: 100%;
-    width: 100%;
+export const Container = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background: #efefef;
+  justify-content: flex-start;
+`
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    gap: 2rem;
+export const ContainerItems = styled.div`
+  padding: 20px;
+  width: 100%;
 `
