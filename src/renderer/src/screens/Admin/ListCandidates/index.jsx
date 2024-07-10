@@ -35,9 +35,15 @@ export function ListCandidates() {
     return <img src={Cancel} />
   }
 
-  function editProduct(candidate) {
+  function editCandidate(candidate) {
     navigate('/editar-candidato', { state: candidate })
   }
+
+  const candidateImagePath = (imagePath) => {
+    if (!imagePath) return ''; // Verifica se imagePath é nulo ou vazio
+    const normalizedPath = imagePath.replace(/\\/g, '/'); // Normaliza o caminho para Unix
+    return `app:///${normalizedPath}`;
+  };
 
   return (
     <Container>
@@ -45,9 +51,9 @@ export function ListCandidates() {
         <Table sx={{ minWidth: 350 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align='center'>Foto</TableCell>
+              <TableCell align="center">Foto</TableCell>
               <TableCell>Nome</TableCell>
-              <TableCell >Partido</TableCell>
+              <TableCell>Partido</TableCell>
               <TableCell>Editar</TableCell>
             </TableRow>
           </TableHead>
@@ -59,7 +65,7 @@ export function ListCandidates() {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell align="center">
-                    <Img src={User} alt="imagem do produto" />
+                    <Img src={candidateImagePath(candidate.imagem)} alt="imagem do candidato" />
                   </TableCell>
                   <TableCell component="th" scope="candidate">
                     {candidate.nome}

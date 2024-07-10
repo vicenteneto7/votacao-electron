@@ -20,6 +20,9 @@ export async function MainWindow() {
     autoHideMenuBar: true,
 
     webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
       sandbox: false,
       preload: join(__dirname, '../preload/index.js'),
     },

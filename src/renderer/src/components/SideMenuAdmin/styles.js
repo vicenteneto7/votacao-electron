@@ -8,7 +8,7 @@ export const Container = styled.main`
     height: 100%;
 
     box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.15);
-  width: 300px;
+  width: 30rem;
   top: 0;
   left: 0;
   hr {
@@ -17,13 +17,13 @@ export const Container = styled.main`
 
 `
 export const ItemContainer = styled.div`
- height: 55px;
+  height: 4rem;
   display: flex;
   align-items: center;
   border-radius: 2px;
   background: ${({ isActive }) => (isActive ? '#565656' : 'none')};
-  margin: 8px;
-  padding-left: 20px;
+  margin: 1rem;
+  padding-left: 2rem;
   transition: ease-in-out 0.3s;
 
   .icon {

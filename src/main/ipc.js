@@ -1,32 +1,57 @@
-import { ipcMain } from 'electron'
+import { app, ipcMain, protocol } from 'electron'
 import db from '../renderer/src/models/DBManager'
 import bcrypt from 'bcrypt'
-import multer from 'multer'
+import path from 'path'
+import fs from 'fs'
 
-// Configuração do armazenamento com multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/')
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`)
+// Registrar protocolo personalizado 'app'
+protocol.registerSchemesAsPrivileged([
+  { scheme: 'app', privileges: { secure: true, standard: true } }
+]);
+
+// Função para carregar recursos locais com protocolo 'app'
+function loadLocalResource(filePath) {
+  return `app://./${filePath}`;
+}
+
+// Diretório de uploads
+const uploadPath = path.resolve(app.getPath('userData'), 'uploads');
+
+// Certifique-se de que o diretório de uploads existe
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath);
+}
+
+// Manipulador IPC para adicionar candidato
+ipcMain.handle('addCandidato', async (event, candidatoData) => {
+  const { nome, partido, file } = candidatoData;
+
+  const query = `
+    INSERT INTO Candidato (nome, partido, imagem)
+    VALUES (?, ?, ?)
+  `;
+  const stmt = db.prepare(query);
+
+  try {
+    if (!file || !file.data || !file.name) {
+      throw new Error('Arquivo inválido');
+    }
+
+    // Gerar nome único para o arquivo
+    const uniqueFileName = Date.now() + '_' + file.name;
+    const imagePath = path.join(uploadPath, uniqueFileName);
+
+    // Salvar arquivo no diretório de uploads
+    fs.writeFileSync(imagePath, Buffer.from(file.data, 'base64'));
+
+    const result = stmt.run(nome, partido, imagePath);
+
+    return { success: true, candidato: { id: result.lastInsertRowid, nome, partido, imagem: imagePath } };
+  } catch (error) {
+    console.error('Erro ao adicionar candidato:', error.message);
+    return { success: false, message: 'Erro ao adicionar candidato: ' + error.message };
   }
-})
-
-// Inicializa o multer com a configuração de armazenamento
-const upload = multer({ storage })
-
-ipcMain.handle('uploadImage', (event, file) => {
-  return new Promise((resolve, reject) => {
-    upload.single('file')(file, {}, (err) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve({ path: `uploads/${file.filename}` })
-      }
-    })
-  })
-})
+});
 
 ipcMain.handle('registerEleitor', async (_, eleitorData) => {
   const { nome, email, senha } = eleitorData

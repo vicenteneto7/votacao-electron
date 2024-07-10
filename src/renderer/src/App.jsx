@@ -5,6 +5,7 @@ import { EleitorProvider } from './hooks/EleitorContext'
 import { ThemeProvider } from 'styled-components'
 import { defaultTheme } from './styles/themes/default'
 import { GlobalStyles } from './styles/globalStyles'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <ThemeProvider theme={defaultTheme}>
           <EleitorProvider>
             <MyRoutes />
+            <ToastContainer autoClose={2000} theme="colored" />
           </EleitorProvider>
           <GlobalStyles />
         </ThemeProvider>

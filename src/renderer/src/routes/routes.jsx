@@ -22,6 +22,8 @@ export function MyRoutes() {
           <Route path="/votacao" element={<PrivateRoute component={CandidateList} />} />
 
           <Route path={paths.Candidates} element={<PrivateRoute component={Admin} isAdmin />} />
+          <Route path={paths.NewCandidate} element={<PrivateRoute component={Admin} isAdmin />} />
+
         </>
       }
       votes={

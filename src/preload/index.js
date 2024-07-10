@@ -26,6 +26,12 @@ const api = {
   },
   countVotesPerCandidate() {
     return ipcRenderer.invoke('countVotesPerCandidate')
+  },
+  uploadImage(file){
+    return ipcRenderer.invoke('uploadImage', file)
+  },
+  addCandidato(req){
+    return ipcRenderer.invoke('addCandidato', req)
   }
 }
 // Use `contextBridge` APIs to expose Electron APIs to
