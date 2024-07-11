@@ -10,16 +10,18 @@ import { useNavigate } from 'react-router-dom'
 import Cancel from '../../../assets/cancel.svg'
 import Check from '../../../assets/check.svg'
 import Edit from '../../../assets/edit.svg'
+import Delete from '../../../assets/delete.svg'
 import User from '../../../assets/user.svg'
 
-import { Container, Img, EditImage } from './styles'
+import { Container, Img, CustomImage } from './styles'
 import { useCandidatos } from '../../../hooks/useCandidates'
+import { toast } from 'react-toastify'
 
 export function ListCandidates() {
   const navigate = useNavigate()
 
-  const { data, error, isLoading } = useCandidatos()
-
+  const { data, isLoading, error, deleteCandidato } = useCandidatos();
+  
   if (isLoading) {
     return <div>Carregando...</div>
   }
@@ -40,10 +42,10 @@ export function ListCandidates() {
   }
 
   const candidateImagePath = (imagePath) => {
-    if (!imagePath) return ''; // Verifica se imagePath é nulo ou vazio
-    const normalizedPath = imagePath.replace(/\\/g, '/'); // Normaliza o caminho para Unix
-    return `app:///${normalizedPath}`;
-  };
+    if (!imagePath) return '' // Verifica se imagePath é nulo ou vazio
+    const normalizedPath = imagePath.replace(/\\/g, '/') // Normaliza o caminho para Unix
+    return `app:///${normalizedPath}`
+  }
 
   return (
     <Container>
@@ -54,7 +56,7 @@ export function ListCandidates() {
               <TableCell align="center">Foto</TableCell>
               <TableCell>Nome</TableCell>
               <TableCell>Partido</TableCell>
-              <TableCell>Editar</TableCell>
+              <TableCell>Ações</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -71,12 +73,21 @@ export function ListCandidates() {
                     {candidate.nome}
                   </TableCell>
                   <TableCell>{candidate.partido}</TableCell>
-                  <TableCell>
-                    <EditImage
-                      onClick={() => editProduct(candidate)}
-                      src={Edit}
-                      alt="editar produto"
-                    />
+                  <TableCell style={{ display: 'flex', flexDirection: 'row'}}>
+                    <div>
+                      <CustomImage
+                        onClick={() => editCandidate(candidate)}
+                        src={Edit}
+                        alt="editar produto"
+                      />
+                    </div>
+                    <div style={{marginLeft: '1rem'}}>
+                      <CustomImage
+                        onClick={() => deleteCandidato(candidate.id_candidato)}
+                        src={Delete}
+                        alt="deletar produto"
+                      />
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

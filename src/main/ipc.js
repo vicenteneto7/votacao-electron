@@ -22,6 +22,63 @@ if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath);
 }
 
+ipcMain.handle('editCandidato', async (event, candidatoData) => {
+  const { id_candidato, nome, partido, file } = candidatoData;
+
+  const query = `
+    UPDATE Candidato
+    SET nome = ?, partido = ?, imagem = ?
+    WHERE id_candidato = ?
+  `;
+  const stmt = db.prepare(query);
+
+  try {
+    let imagePath = null;
+
+    if (file && file.data && file.name) {
+      // Gerar nome único para o arquivo
+      const uniqueFileName = Date.now() + '_' + file.name;
+      imagePath = path.join(uploadPath, uniqueFileName);
+
+      // Salvar arquivo no diretório de uploads
+      fs.writeFileSync(imagePath, Buffer.from(file.data, 'base64'));
+    }
+
+    stmt.run(nome, partido, imagePath, id_candidato);
+
+    return { success: true, candidato: { id_candidato, nome, partido, imagem: imagePath } };
+  } catch (error) {
+    console.error('Erro ao editar candidato:', error.message);
+    return { success: false, message: 'Erro ao editar candidato: ' + error.message };
+  }
+});
+
+ipcMain.handle('deleteCandidato', async (event, candidatoId) => {
+  const querySelect = `SELECT imagem FROM Candidato WHERE id_candidato = ?`;
+  const queryDelete = `DELETE FROM Candidato WHERE id_candidato = ?`;
+  const stmtSelect = db.prepare(querySelect);
+  const stmtDelete = db.prepare(queryDelete);
+
+  try {
+    // Selecionar o caminho da imagem
+    const candidato = stmtSelect.get(candidatoId);
+
+    if (candidato && candidato.imagem) {
+      // Excluir o arquivo de imagem
+      fs.unlinkSync(candidato.imagem);
+    }
+
+    // Deletar o candidato do banco de dados
+    stmtDelete.run(candidatoId);
+
+    return { success: true };
+  } catch (error) {
+    console.error('Erro ao deletar candidato:', error.message);
+    return { success: false, message: 'Erro ao deletar candidato: ' + error.message };
+  }
+});
+
+
 // Manipulador IPC para adicionar candidato
 ipcMain.handle('addCandidato', async (event, candidatoData) => {
   const { nome, partido, file } = candidatoData;

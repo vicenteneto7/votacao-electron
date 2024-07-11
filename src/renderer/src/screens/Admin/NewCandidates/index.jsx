@@ -7,6 +7,8 @@ import { Container, Label, Input, StyledButton, LabelUpload } from './styles';
 import Upload from '../../../assets/upload.svg';
 import { ErrorMessage } from '../../../components/ErrorMessage';
 import { useAddCandidato } from '../../../hooks/useAddCandidato';
+import { useNavigate } from 'react-router-dom';
+import { paths } from '../../../constants/paths';
 
 const schema = yup.object().shape({
   nome: yup.string().required('Digite o nome do candidato'),
@@ -22,6 +24,8 @@ const schema = yup.object().shape({
 });
 
 export function NewCandidato() {
+  const navigate = useNavigate()
+
   const [fileName, setFileName] = useState('');
   const { mutate: addCandidato } = useAddCandidato();
 
@@ -48,6 +52,9 @@ export function NewCandidato() {
     addCandidato(candidatoDataFormData, {
       onSuccess: () => {
         toast.success('Candidato criado com sucesso!');
+        setTimeout(() => {
+          navigate(paths.Candidates)
+        }, 1000)
       },
       onError: (error) => {
         toast.error(`Erro ao criar candidato: ${error.message}`);

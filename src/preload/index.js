@@ -15,7 +15,7 @@ const api = {
   loginEleitor(req) {
     return ipcRenderer.invoke('loginEleitor', req)
   },
-  vote(req){
+  vote(req) {
     return ipcRenderer.invoke('vote', req)
   },
   getCandidatos() {
@@ -27,11 +27,17 @@ const api = {
   countVotesPerCandidate() {
     return ipcRenderer.invoke('countVotesPerCandidate')
   },
-  uploadImage(file){
+  uploadImage(file) {
     return ipcRenderer.invoke('uploadImage', file)
   },
-  addCandidato(req){
+  addCandidato(req) {
     return ipcRenderer.invoke('addCandidato', req)
+  },
+  editCandidato(req) {
+    return ipcRenderer.invoke('editCandidato', req)
+  },
+  deleteCandidato(id) {
+    return ipcRenderer.invoke('deleteCandidato', id)
   }
 }
 // Use `contextBridge` APIs to expose Electron APIs to

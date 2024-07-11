@@ -23,7 +23,7 @@ export function MyRoutes() {
 
           <Route path={paths.Candidates} element={<PrivateRoute component={Admin} isAdmin />} />
           <Route path={paths.NewCandidate} element={<PrivateRoute component={Admin} isAdmin />} />
-
+          <Route path={paths.EditCandidate} element={<PrivateRoute component={Admin} isAdmin />} />
         </>
       }
       votes={

@@ -1,5 +1,7 @@
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { toast } from 'react-toastify';
 
+// Função para buscar candidatos
 const fetchCandidatos = async () => {
   const response = await window.api.getCandidatos();
   if (response.success) {
@@ -9,6 +11,35 @@ const fetchCandidatos = async () => {
   }
 };
 
+// Função para deletar candidato
+const deleteCandidato = async (id) => {
+  const response = await window.api.deleteCandidato(id);
+  if (!response.success) {
+    throw new Error(response.message);
+  }
+};
+
+// Hook personalizado para gerenciar candidatos
 export const useCandidatos = () => {
-  return useQuery('candidatos', fetchCandidatos);
+  const queryClient = useQueryClient();
+
+  const candidatosQuery = useQuery('candidatos', fetchCandidatos, {
+    refetchInterval: 100 ,refetchOnWindowFocus: true
+  });
+
+  const deleteMutation = useMutation(deleteCandidato, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('candidatos');
+      toast.success('Candidato deletado com sucesso!');
+    },
+    onError: (error) => {
+      toast.error('Erro ao deletar candidato!');
+      console.error(error);
+    },
+  });
+
+  return {
+    ...candidatosQuery,
+    deleteCandidato: deleteMutation.mutate,
+  };
 };

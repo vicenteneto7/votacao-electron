@@ -9,6 +9,8 @@ export const Img = styled.img`
   border-radius: 5px;
 `
 
-export const EditImage = styled.img`
+export const CustomImage = styled.img`
+  width: 1.8rem;
+  height: 1.8rem;
   cursor: pointer;
 `
