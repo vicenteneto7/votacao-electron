@@ -1,3 +1,4 @@
+import React from 'react'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -6,22 +7,61 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
 
 import Cancel from '../../../assets/cancel.svg'
 import Check from '../../../assets/check.svg'
 import Edit from '../../../assets/edit.svg'
-import Delete from '../../../assets/delete.svg'
+import Delete from '../../../assets/trash.svg'
 import User from '../../../assets/user.svg'
 
 import { Container, Img, CustomImage } from './styles'
-import { useCandidatos } from '../../../hooks/useCandidates'
-import { toast } from 'react-toastify'
+
+const fetchVotesPerCandidate = async () => {
+  const response = await window.api.countVotesPerCandidate()
+  if (response.success) {
+    return response.results
+  } else {
+    throw new Error(response.message)
+  }
+}
+
+const deleteCandidato = async (id) => {
+  const response = await window.api.deleteCandidato(id)
+  if (!response.success) {
+    throw new Error(response.message)
+  }
+  return response
+}
 
 export function ListCandidates() {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
-  const { data, isLoading, error, deleteCandidato } = useCandidatos();
-  
+  const { data, isLoading, error } = useQuery('candidatos', fetchVotesPerCandidate, {
+    refetchInterval: 60000, // Recarregar a cada 60 segundos
+    refetchOnWindowFocus: true // Recarregar ao focar a janela
+  })
+
+  const deleteMutation = useMutation(deleteCandidato, {
+    onMutate: async (id) => {
+      await queryClient.cancelQueries('candidatos')
+      const previousData = queryClient.getQueryData('candidatos')
+      queryClient.setQueryData('candidatos', (old) =>
+        old.filter((candidato) => candidato.id_candidato !== id)
+      )
+      return { previousData }
+    },
+    onError: (err, id, context) => {
+      queryClient.setQueryData('candidatos', context.previousData)
+      toast.error(`Erro ao deletar candidato: ${err.message}`)
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries('candidatos')
+    }
+  })
+
   if (isLoading) {
     return <div>Carregando...</div>
   }
@@ -30,15 +70,20 @@ export function ListCandidates() {
     return <div>Erro: {error.message}</div>
   }
 
-  function isOffer(offerStatus) {
-    if (offerStatus) {
-      return <img src={Check} />
-    }
-    return <img src={Cancel} />
+  if (!data || data.length === 0) {
+    return (
+      <div>
+        <p>Nenhum candidato encontrado.</p>
+      </div>
+    )
   }
 
-  function editCandidate(candidate) {
+  const handleEdit = (candidate) => {
     navigate('/editar-candidato', { state: candidate })
+  }
+
+  const handleDelete = (id) => {
+    deleteMutation.mutate(id)
   }
 
   const candidateImagePath = (imagePath) => {
@@ -56,41 +101,41 @@ export function ListCandidates() {
               <TableCell align="center">Foto</TableCell>
               <TableCell>Nome</TableCell>
               <TableCell>Partido</TableCell>
-              <TableCell>Ações</TableCell>
+              <TableCell align="center">Votos</TableCell>
+              <TableCell align="center">Editar</TableCell>
+              <TableCell align="center">Remover</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data &&
-              data.map((candidate) => (
-                <TableRow
-                  key={candidate.id_candidato}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell align="center">
-                    <Img src={candidateImagePath(candidate.imagem)} alt="imagem do candidato" />
-                  </TableCell>
-                  <TableCell component="th" scope="candidate">
-                    {candidate.nome}
-                  </TableCell>
-                  <TableCell>{candidate.partido}</TableCell>
-                  <TableCell style={{ display: 'flex', flexDirection: 'row'}}>
-                    <div>
-                      <CustomImage
-                        onClick={() => editCandidate(candidate)}
-                        src={Edit}
-                        alt="editar produto"
-                      />
-                    </div>
-                    <div style={{marginLeft: '1rem'}}>
-                      <CustomImage
-                        onClick={() => deleteCandidato(candidate.id_candidato)}
-                        src={Delete}
-                        alt="deletar produto"
-                      />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+            {data.map((candidate) => (
+              <TableRow
+                key={candidate.id_candidato}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell align="center">
+                  <Img src={User} alt="imagem do candidato" />
+                </TableCell>
+                <TableCell component="th" scope="candidate">
+                  {candidate.candidato_nome}
+                </TableCell>
+                <TableCell>{candidate.partido}</TableCell>
+                <TableCell align="center">{candidate.total_votos}</TableCell>
+                <TableCell align="center">
+                  <CustomImage
+                    onClick={() => handleEdit(candidate)}
+                    src={Edit}
+                    alt="editar candidato"
+                  />
+                </TableCell>
+                <TableCell align="center">
+                  <CustomImage
+                    onClick={() => handleDelete(candidate.id_candidato)}
+                    src={Delete}
+                    alt="deletar candidato"
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useEleitor } from '../../../hooks/EleitorContext'
 import { ContainerLink, InputForm, InputLabel, LoginContainer } from './styles'
 import { ButtonAction } from '../../../components/ButtonAction'
+import { toast } from 'react-toastify'
 
 const loginEleitor = async (data) => {
   const response = await window.api.loginEleitor(data)
@@ -32,13 +33,17 @@ export const Login = () => {
       // Lógica adicional após login bem-sucedido
       putEleitorData(dataEleitor)
 
-      setTimeout(() => {
-        if (dataEleitor.admin) {
+      if (dataEleitor.admin) {
+        toast.success('Admin logado com sucesso!')
+        setTimeout(() => {
           navigate('/listar-candidatos')
-        } else {
+        }, 800)
+      } else {
+        toast.success('Logado com sucesso!')
+        setTimeout(() => {
           navigate('/main')
-        }
-      }, 1000)
+        }, 800)
+      }
 
       return dataEleitor
     },
@@ -73,7 +78,7 @@ export const Login = () => {
           {errors.senha && <p>{errors.senha.message}</p>}
         </div>
         <ButtonAction type="submit" disabled={mutation.isLoading}>
-          {mutation.isLoading ? 'Logando...' : 'Login'}
+          Login
         </ButtonAction>
         {mutation.isError && <p>{mutation.error.message}</p>}
 

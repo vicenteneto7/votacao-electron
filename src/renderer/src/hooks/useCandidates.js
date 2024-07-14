@@ -24,7 +24,7 @@ export const useCandidatos = () => {
   const queryClient = useQueryClient();
 
   const candidatosQuery = useQuery('candidatos', fetchCandidatos, {
-    refetchInterval: 100 ,refetchOnWindowFocus: true
+    refetchInterval: 100, refetchOnWindowFocus: true
   });
 
   const deleteMutation = useMutation(deleteCandidato, {

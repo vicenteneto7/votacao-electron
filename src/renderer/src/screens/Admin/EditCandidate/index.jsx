@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Container, Label, Input, StyledButton, LabelUpload } from './styles'
 import Upload from '../../../assets/upload.svg'
+import { paths } from '../../../constants/paths'
 
 export function EditCandidate() {
   const { state: candidate } = useLocation()
@@ -12,7 +13,7 @@ export function EditCandidate() {
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      name: candidate.nome,
+      name: candidate.candidato_nome,
       partido: candidate.partido
     }
   })
@@ -35,7 +36,9 @@ export function EditCandidate() {
       await window.api.editCandidato(candidateData)
 
       toast.success('Candidato editado com sucesso!')
-      navigate('/listar-candidatos')
+      setTimeout(() => {
+        navigate(paths.Candidates)
+      }, 1000)
     } catch (error) {
       toast.error('Erro ao editar candidato!')
       console.error(error)

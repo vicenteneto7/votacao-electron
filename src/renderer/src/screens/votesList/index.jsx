@@ -1,6 +1,5 @@
-import { useQuery } from 'react-query'
-import { useNavigate } from 'react-router-dom'
-import { FixedSizeList as List } from 'react-window'
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Button,
@@ -19,14 +18,16 @@ import {
   Party,
   Title,
   Voted
-} from './styles'
-import { MdArrowBack } from 'react-icons/md'
-import { LiaLongArrowAltRightSolid } from 'react-icons/lia'
+} from './styles';
+import { MdArrowBack } from 'react-icons/md';
+import { LiaLongArrowAltRightSolid } from 'react-icons/lia';
 
-import User from '../../assets/user.svg'
+import PropTypes from 'prop-types';
+
+import User from '../../assets/user.svg';
 
 export function VotesList() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { data, isLoading, isError } = useQuery(
     'allVoterVotes',
@@ -34,17 +35,17 @@ export function VotesList() {
     {
       refetchInterval: 1000
     }
-  )
+  );
 
-  if (isLoading) return <div>Carregando...</div>
-  if (isError) return <div>Erro ao carregar os votos</div>
+  if (isLoading) return <div>Carregando...</div>;
+  if (isError) return <div>Erro ao carregar os votos</div>;
 
   function handleClick() {
-    navigate('/main')
+    navigate('/main');
   }
 
   const Row = ({ index, style, data }) => {
-    const vote = data[index]
+    const vote = data[index];
     return (
       <ContainerItems style={style} key={index}>
         <CardInner>
@@ -66,8 +67,21 @@ export function VotesList() {
           </CardVote>
         </CardInner>
       </ContainerItems>
-    )
-  }
+    );
+  };
+
+  Row.propTypes = {
+    index: PropTypes.number.isRequired,
+    style: PropTypes.object.isRequired,
+    data: PropTypes.arrayOf(
+      PropTypes.shape({
+        eleitor_nome: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+        candidato_nome: PropTypes.string.isRequired,
+        partido: PropTypes.string.isRequired
+      })
+    ).isRequired
+  };
 
   return (
     <Container>
@@ -83,7 +97,7 @@ export function VotesList() {
         </div>
       </ButtonContainer>
       <Container2>
-        {data && (
+        {data && data.votes && (
           <CustomList
             height={600}
             itemCount={data.votes.length}
@@ -97,5 +111,5 @@ export function VotesList() {
         )}
       </Container2>
     </Container>
-  )
+  );
 }

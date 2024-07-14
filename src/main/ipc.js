@@ -1,18 +1,9 @@
-import { app, ipcMain, protocol } from 'electron'
+import { app, ipcMain } from 'electron'
 import db from '../renderer/src/models/DBManager'
 import bcrypt from 'bcrypt'
 import path from 'path'
 import fs from 'fs'
 
-// Registrar protocolo personalizado 'app'
-protocol.registerSchemesAsPrivileged([
-  { scheme: 'app', privileges: { secure: true, standard: true } }
-]);
-
-// Função para carregar recursos locais com protocolo 'app'
-function loadLocalResource(filePath) {
-  return `app://./${filePath}`;
-}
 
 // Diretório de uploads
 const uploadPath = path.resolve(app.getPath('userData'), 'uploads');

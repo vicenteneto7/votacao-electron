@@ -21,6 +21,7 @@ import User from '../../assets/user.svg'
 import Carousel from 'react-elastic-carousel'
 
 import { MdArrowBack } from 'react-icons/md'
+import { toast } from 'react-toastify'
 
 const fetchCandidatos = async () => {
   const response = await window.api.getCandidatos()
@@ -117,10 +118,8 @@ export const CandidateList = () => {
             </ContainerItems>
           ))}
         </Carousel>
-        {mutation.isError && (
-          <p style={{ color: 'red' }}>Erro ao votar: {mutation.error.message}</p>
-        )}
-        {mutation.isSuccess && <p>Voto registrado com sucesso!</p>}
+        {mutation.isError && toast.error(`Erro ao votar: ${mutation.error.message}!`)}
+        {mutation.isSuccess && toast.success('Voto registrado com sucesso!')}
       </Container2>
     </Container>
   )

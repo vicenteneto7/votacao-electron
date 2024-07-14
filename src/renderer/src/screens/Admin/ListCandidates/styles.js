@@ -5,7 +5,7 @@ export const Container = styled.div`
   background: #efefef;
 `
 export const Img = styled.img`
-  width: 5rem;
+  width: 2.3rem;
   border-radius: 5px;
 `
 

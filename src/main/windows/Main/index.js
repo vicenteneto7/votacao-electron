@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron'
+import { BrowserWindow, protocol } from 'electron'
 import { join } from 'path'
 import { createWindow } from '../../factories'
 import { ENVIRONMENT } from '../../../../shared/constants'
@@ -7,6 +7,7 @@ import { displayName } from '../../../../package.json'
 
 
 export async function MainWindow() {
+
   const window = createWindow({
     id: 'main',
     title: displayName,
