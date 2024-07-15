@@ -1,7 +1,6 @@
 import { Button } from '../../../components/Button'
 import { useEffect } from 'react'
 import { useWindowStore } from '../../../store/votes'
-import { useEleitor } from '../../../hooks/EleitorContext'
 import { useNavigate } from 'react-router-dom'
 import { Container1, Container2, MainRouteContainer } from './styles'
 import { ButtonAction } from '../../../components/ButtonAction'
@@ -10,14 +9,9 @@ import { Header } from '../../../components/Header'
 export function MainScreen() {
   const store = useWindowStore().about
 
-  const { logout } = useEleitor()
 
   const navigate = useNavigate()
 
-  const LogoutEleitor = () => {
-    logout()
-    navigate('/login')
-  }
 
   useEffect(() => {
     window.api.whenVotesWindowClose(({ message }) => {

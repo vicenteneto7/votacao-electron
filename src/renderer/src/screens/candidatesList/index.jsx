@@ -1,4 +1,3 @@
-// src/components/CandidateList.jsx
 import { useQuery, useMutation } from 'react-query'
 import { useEleitor } from '../../hooks/EleitorContext'
 import { queryClient } from '../../lib/react-query'
@@ -22,6 +21,7 @@ import Carousel from 'react-elastic-carousel'
 
 import { MdArrowBack } from 'react-icons/md'
 import { toast } from 'react-toastify'
+import { useState, useEffect } from 'react'
 
 const fetchCandidatos = async () => {
   const response = await window.api.getCandidatos()
@@ -41,8 +41,8 @@ const voteCandidato = async ({ id_eleitor, id_candidato }) => {
 
 export const CandidateList = () => {
   const navigate = useNavigate()
-
   const { eleitorData } = useEleitor()
+  const [hasVoted, setHasVoted] = useState(false)
 
   const {
     data: candidatos,
@@ -52,20 +52,32 @@ export const CandidateList = () => {
     refetchInterval: 1000
   })
 
-  console.log(candidatos)
-
   const mutation = useMutation(voteCandidato, {
     onSuccess: () => {
       queryClient.invalidateQueries('candidatos')
       queryClient.invalidateQueries('voterVotes')
+      setHasVoted(true)
+    },
+    onError: () => {
+      setHasVoted(true)
     }
   })
+
+  useEffect(() => {
+    if (mutation.isError) {
+      toast.error(`Erro ao votar: ${mutation.error.message}!`)
+    }
+    if (mutation.isSuccess) {
+      toast.success('Voto registrado com sucesso!')
+    }
+    setHasVoted(false)
+  }, [mutation.isError, mutation.isSuccess])
 
   const handleVote = (id_candidato) => {
     if (eleitorData.eleitorId && id_candidato) {
       mutation.mutate({ id_eleitor: eleitorData.eleitorId, id_candidato })
     } else {
-      console.error('IDs de eleitor ou candidato são nulos9.')
+      console.error('IDs de eleitor ou candidato são nulos.')
     }
   }
 
@@ -74,10 +86,6 @@ export const CandidateList = () => {
 
   function handleClick() {
     navigate('/main')
-  }
-
-  function handleClickCarrossel() {
-    navigate('/carrossel')
   }
 
   const breakPoints = [
@@ -118,8 +126,6 @@ export const CandidateList = () => {
             </ContainerItems>
           ))}
         </Carousel>
-        {mutation.isError && toast.error(`Erro ao votar: ${mutation.error.message}!`)}
-        {mutation.isSuccess && toast.success('Voto registrado com sucesso!')}
       </Container2>
     </Container>
   )

@@ -28,7 +28,7 @@ export function Header() {
         <PageLink onClick={() => navigate('/main')} isActive={pathname === '/main'}>
           Home
         </PageLink>
-        <PageLink onClick={() => navigate('/produtos')} isActive={pathname.includes('/produtos')}>
+        <PageLink onClick={() => navigate('/votosbyid')} isActive={pathname.includes('/votosbyid')}>
           Meus votos
         </PageLink>
       </ContainerLeft>

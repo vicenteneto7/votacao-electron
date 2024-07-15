@@ -17,7 +17,6 @@ function PrivateRoute({ component: Component, isAdmin }) {
 
   return (
     <>
-    {}
       <Component />
     </>
   )

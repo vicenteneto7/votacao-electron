@@ -38,6 +38,9 @@ const api = {
   },
   deleteCandidato(id) {
     return ipcRenderer.invoke('deleteCandidato', id)
+  },
+  getVoterVotes(id) {
+    return ipcRenderer.invoke('getVoterVotes', id)
   }
 }
 // Use `contextBridge` APIs to expose Electron APIs to

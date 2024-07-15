@@ -9,6 +9,7 @@ import { CountVotes } from '../screens/main/votos'
 import { CandidateList } from '../screens/candidatesList'
 import { paths } from '../constants/paths'
 import { Admin } from '../screens/Admin'
+import { VotesListById } from '../screens/main/EleitorVotes'
 
 export function MyRoutes() {
   return (
@@ -19,6 +20,7 @@ export function MyRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/main" element={<PrivateRoute component={MainScreen} />} />
           <Route path="/votos" element={<PrivateRoute component={VotesList} />} />
+          <Route path="/votosbyid" element={<PrivateRoute component={VotesListById} />} />
           <Route path="/votacao" element={<PrivateRoute component={CandidateList} />} />
 
           <Route path={paths.Candidates} element={<PrivateRoute component={Admin} isAdmin />} />

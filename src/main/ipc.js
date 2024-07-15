@@ -202,24 +202,25 @@ ipcMain.handle('getCandidatos', async () => {
 
 ipcMain.handle('getVoterVotes', async (_, { id_eleitor }) => {
   const query = `
-    SELECT Candidato.nome, Candidato.partido
+    SELECT Candidato.nome AS candidato_nome, Candidato.partido
     FROM Voto
     JOIN Candidato ON Voto.id_candidato = Candidato.id_candidato
     WHERE Voto.id_eleitor = :id_eleitor
-  `
-  const stmt = db.prepare(query)
+  `;
+  const stmt = db.prepare(query);
 
   try {
-    const votes = stmt.all({ id_eleitor })
+    const votes = stmt.all({ id_eleitor });
     if (votes.length > 0) {
-      return { success: true, votes: votes }
+      return { success: true, votes: votes };
     } else {
-      return { success: false, message: 'Eleitor não votou ainda.' }
+      return { success: false, message: 'Eleitor não votou ainda.' };
     }
   } catch (error) {
-    return { success: false, message: 'Erro ao buscar votos: ' + error.message }
+    return { success: false, message: 'Erro ao buscar votos: ' + error.message };
   }
-})
+});
+
 
 ipcMain.handle('getAllVoterVotes', async () => {
   const query = `
