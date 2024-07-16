@@ -85,7 +85,7 @@ export const Login = () => {
         <ContainerLink>
           <p>Não possui conta?</p>
           <a>
-            <Link to="/">Clique aqui</Link>
+            <Link to="/register">Clique aqui</Link>
           </a>
         </ContainerLink>
       </form>

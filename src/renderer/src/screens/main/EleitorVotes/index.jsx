@@ -6,10 +6,10 @@ import {
   CardInner,
   CardVote,
   CardVoted,
-  Container,
-  Container1,
-  Container2,
+  ContainerFirst,
   ContainerItems,
+  ContainerSecond,
+  ContainerThird,
   CustomList,
   Image,
   MainContainer,
@@ -79,16 +79,16 @@ export function VotesListById() {
 
   return (
     <MainContainer>
-      <Container1>
+      <ContainerFirst>
         <Header />
-      </Container1>
-      <Container>
+      </ContainerFirst>
+      <ContainerSecond>
         <ButtonContainer>
           <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
             <Title>Lista de votos realizados</Title>
           </div>
         </ButtonContainer>
-        <Container2>
+        <ContainerThird>
           {data && data.votes && (
             <CustomList
               height={600}
@@ -101,8 +101,8 @@ export function VotesListById() {
               {Row}
             </CustomList>
           )}
-        </Container2>
-      </Container>
+        </ContainerThird>
+      </ContainerSecond>
     </MainContainer>
   )
 }

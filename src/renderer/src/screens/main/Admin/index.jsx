@@ -2,8 +2,8 @@ import { useLocation } from 'react-router-dom'
 
 import { Container, ContainerItems } from './styles'
 import { ListCandidates } from './ListCandidates'
-import { paths } from '../../constants/paths'
-import { SideMenuAdmin } from '../../components/SideMenuAdmin'
+import { paths } from '../../../constants/paths'
+import { SideMenuAdmin } from '../../../components/SideMenuAdmin'
 import { NewCandidato } from './NewCandidates'
 import { EditCandidate } from './EditCandidate'
 

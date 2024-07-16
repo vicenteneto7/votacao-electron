@@ -24,7 +24,7 @@ import { LiaLongArrowAltRightSolid } from 'react-icons/lia';
 
 import PropTypes from 'prop-types';
 
-import User from '../../assets/user.svg';
+import User from '../../../assets/user.svg';
 
 export function VotesList() {
   const navigate = useNavigate();

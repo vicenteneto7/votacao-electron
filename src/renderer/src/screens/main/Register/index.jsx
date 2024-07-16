@@ -88,9 +88,9 @@ export const Register = () => {
 
         <ContainerLink>
           <p>Já possui conta?</p>
-          <a>
-            <Link to="/login">Clique aqui</Link>
-          </a>
+          <p>
+            <Link to="/">Clique aqui</Link>
+          </p>
         </ContainerLink>
       </form>
     </RegisterContainer>

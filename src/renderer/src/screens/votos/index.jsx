@@ -1,4 +1,4 @@
-import { CandidatesCarousel } from '../../../components/CandidatesCarousel'
+import { CandidatesCarousel } from '../../components/CandidatesCarousel'
 import { Container } from './styles'
 
 export function CountVotes() {

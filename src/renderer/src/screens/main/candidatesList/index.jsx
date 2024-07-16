@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from 'react-query'
-import { useEleitor } from '../../hooks/EleitorContext'
-import { queryClient } from '../../lib/react-query'
+import { useEleitor } from '../../../hooks/EleitorContext'
+import { queryClient } from '../../../lib/react-query'
 import { useNavigate } from 'react-router-dom'
 import {
   Button,
@@ -15,7 +15,7 @@ import {
   Party
 } from './styles'
 
-import User from '../../assets/user.svg'
+import User from '../../../assets/user.svg'
 
 import Carousel from 'react-elastic-carousel'
 

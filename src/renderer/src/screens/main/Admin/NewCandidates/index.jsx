@@ -4,11 +4,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { Container, Label, Input, StyledButton, LabelUpload } from './styles';
-import Upload from '../../../assets/upload.svg';
-import { ErrorMessage } from '../../../components/ErrorMessage';
-import { useAddCandidato } from '../../../hooks/useAddCandidato';
+import Upload from '../../../../assets/upload.svg';
+import { ErrorMessage } from '../../../../components/ErrorMessage';
+import { useAddCandidato } from '../../../../hooks/useAddCandidato';
 import { useNavigate } from 'react-router-dom';
-import { paths } from '../../../constants/paths';
+import { paths } from '../../../../constants/paths';
 
 const schema = yup.object().shape({
   nome: yup.string().required('Digite o nome do candidato'),

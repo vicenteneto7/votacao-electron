@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Container, Label, Input, StyledButton, LabelUpload } from './styles'
-import Upload from '../../../assets/upload.svg'
-import { paths } from '../../../constants/paths'
+import Upload from '../../../../assets/upload.svg'
+import { paths } from '../../../../constants/paths'
 
 export function EditCandidate() {
   const { state: candidate } = useLocation()

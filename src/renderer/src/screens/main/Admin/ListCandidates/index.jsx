@@ -1,4 +1,3 @@
-import React from 'react'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -10,11 +9,9 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
-import Cancel from '../../../assets/cancel.svg'
-import Check from '../../../assets/check.svg'
-import Edit from '../../../assets/edit.svg'
-import Delete from '../../../assets/trash.svg'
-import User from '../../../assets/user.svg'
+import Edit from '../../../../assets/edit.svg'
+import Delete from '../../../../assets/trash.svg'
+import User from '../../../../assets/user.svg'
 
 import { Container, Img, CustomImage } from './styles'
 
