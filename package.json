@@ -47,8 +47,10 @@
     "react-toastify": "^10.0.5",
     "react-window": "^1.8.10",
     "slick-carousel": "^1.8.1",
+    "socket.io": "^4.7.5",
     "styled-components": "^6.1.11",
     "uuid": "^10.0.0",
+    "ws": "^8.18.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
