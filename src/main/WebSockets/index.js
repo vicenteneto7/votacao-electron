@@ -1,49 +1,84 @@
-const { Server } = require('socket.io');
-const bcrypt = require('bcrypt');
-const { default: db } = require('../../renderer/src/models/DBManager');
+import bcrypt from 'bcrypt';
+import db from '../../renderer/src/models/DBManager'
 
-const io = new Server(8082, {
-  cors: {
-    origin: '*',
-  },
-});
+export async function handleLogin(socket, credentials) {
+  const { email, senha } = credentials;
 
-io.on('connection', (socket) => {
-  console.log('Novo cliente conectado:', socket.id);
-
-  socket.on('loginEleitor', async (credentials) => {
-    const { email, senha } = credentials;
-
+  try {
     const query = `
-        SELECT * FROM Eleitor WHERE email = :email
-      `;
+      SELECT * FROM Eleitor WHERE email = :email
+    `;
     const stmt = db.prepare(query);
-
     const eleitor = stmt.get({ email });
 
-    let response;
     if (eleitor) {
       const isPasswordValid = await bcrypt.compare(senha, eleitor.senha);
-      if (isPasswordValid) {
-        response = {
+      const response = isPasswordValid
+        ? {
           success: true,
           message: 'Login bem-sucedido!',
           admin: Boolean(eleitor.admin),
           eleitorId: eleitor.id_eleitor,
           nome: eleitor.nome,
-        };
-      } else {
-        response = { success: false, message: 'Senha incorreta.' };
-      }
+        }
+        : { success: false, message: 'Senha incorreta.' };
+
+      socket.emit('loginResponse', response);
     } else {
-      response = { success: false, message: 'Usuário não encontrado.' };
+      socket.emit('loginResponse', { success: false, message: 'Usuário não encontrado.' });
     }
+  } catch (error) {
+    console.error('Erro ao processar login:', error);
+    socket.emit('loginResponse', { success: false, message: 'Erro no servidor.' });
+  }
+}
 
-    // Envie a resposta de volta ao cliente
-    socket.emit('loginResponse', response);
-  });
+export async function getCandidatos(socket) {
+  const query = `SELECT * FROM Candidato`;
+  const stmt = db.prepare(query);
 
-  socket.on('disconnect', () => {
-    console.log('Cliente desconectado:', socket.id);
-  });
-});
+  try {
+    const candidatos = stmt.all();
+    if (candidatos.length > 0) {
+      socket.emit('candidatesResponse', { success: true, candidatos });
+    } else {
+      socket.emit('candidatesResponse', { success: false, message: 'Nenhum candidato encontrado.' });
+    }
+  } catch (error) {
+    socket.emit('candidatesResponse', { success: false, message: 'Erro ao buscar candidatos: ' + error.message });
+  }
+}
+
+// Adapte a função de votação para o uso de WebSocket
+export function handleVote(socket, { id_eleitor, id_candidato }) {
+  if (!id_eleitor || !id_candidato) {
+    socket.emit('voteResponse', { success: false, message: 'IDs de eleitor ou candidato são nulos.' });
+    return;
+  }
+
+  const checkQuery = `SELECT * FROM Voto WHERE id_eleitor = :id_eleitor`;
+  const checkStmt = db.prepare(checkQuery);
+
+  // Verificar se o eleitor já votou
+  const existingVote = checkStmt.get({ id_eleitor });
+
+  if (existingVote) {
+    socket.emit('voteResponse', { success: false, message: 'Eleitor já votou.' });
+    return;
+  }
+
+  const insertQuery = `
+      INSERT INTO Voto (id_eleitor, id_candidato)
+      VALUES (:id_eleitor, :id_candidato)
+  `;
+  const insertStmt = db.prepare(insertQuery);
+
+  try {
+    insertStmt.run({ id_eleitor, id_candidato });
+    socket.emit('voteResponse', { success: true, message: 'Voto registrado com sucesso!' });
+  } catch (error) {
+    socket.emit('voteResponse', { success: false, message: 'Erro ao registrar voto: ' + error.message });
+  }
+}
+
+

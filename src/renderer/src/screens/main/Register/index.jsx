@@ -41,7 +41,7 @@ export const Register = () => {
       console.log('Registro bem-sucedido:', data)
       toast.success('Registro criado com sucesso')
       setTimeout(() => {
-        navigate('/main')
+        navigate('/')
       }, 1000)
     },
     onError: (error) => {
