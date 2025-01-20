@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: electron-template
+appId: com.vicente.app
+productName: electron-votacao
 directories:
   buildResources: build
 files:
@@ -30,13 +30,12 @@ dmg:
 linux:
   target:
     - AppImage
-    - snap
     - deb
+    - rpm
+    - pacman
+    - freebsd
   maintainer: electronjs.org
   category: Utility
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
-publish:
-  provider: generic
-  url: https://example.com/auto-updates

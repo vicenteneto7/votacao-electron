@@ -16,7 +16,8 @@
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
     "build:mac": "npm run build && electron-builder --mac",
-    "build:linux": "npm run build && electron-builder --linux"
+    "build:linux": "npm run build && electron-builder --linux",
+    "release": "electron-builder --publish always"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
@@ -35,6 +36,8 @@
     "electron-serve": "^2.0.0",
     "multer": "^1.4.5-lts.1",
     "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-elastic-carousel": "^0.11.5",
     "react-hook-form": "^7.51.5",
     "react-icons": "^5.2.1",
@@ -59,13 +62,11 @@
     "@electron/rebuild": "^3.6.0",
     "@vitejs/plugin-react": "^4.2.1",
     "electron": "^28.2.0",
-    "electron-builder": "^24.9.1",
+    "electron-builder": "^24.13.3",
     "electron-vite": "^2.0.0",
     "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.33.2",
     "prettier": "^3.2.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "vite": "^5.0.12",
     "vite-plugin-electron-builder": "^0.1.0"
   }

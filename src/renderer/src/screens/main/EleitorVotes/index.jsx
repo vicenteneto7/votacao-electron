@@ -89,7 +89,7 @@ export function VotesListById() {
           </div>
         </ButtonContainer>
         <ContainerThird>
-          {data && data.votes && (
+          {data && data?.votes && data.votes.length > 0 ? (
             <CustomList
               height={600}
               itemCount={data.votes.length}
@@ -100,7 +100,9 @@ export function VotesListById() {
             >
               {Row}
             </CustomList>
-          )}
+          ) : (
+            <h1>Não há votos</h1>
+          )} 
         </ContainerThird>
       </ContainerSecond>
     </MainContainer>
